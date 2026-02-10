@@ -1,0 +1,73 @@
+
+var splitArr = function(data , senArrLen){
+  //处理成len个一组的数据
+  var data_len = data.length;
+  var arrOuter_len = data_len % senArrLen === 0 ? data_len / senArrLen : parseInt((data_len / senArrLen)+'') + 1;
+  var arrSec_len = data_len > senArrLen ? senArrLen : data_len;//内层数组的长度
+  var arrOuter = new Array(arrOuter_len);//最外层数组
+  var arrOuter_index = 0;//外层数组的子元素下标
+  // console.log(data_len % len);
+  for (var i = 0; i < data_len; i++) {
+      if (i % senArrLen === 0){
+          arrOuter_index++;
+          var len = arrSec_len * arrOuter_index;
+          //将内层数组的长度最小取决于数据长度对len取余，平时最内层由下面赋值决定
+          arrOuter[arrOuter_index-1] = new  Array(data_len % senArrLen);
+          if(arrOuter_index === arrOuter_len)//最后一组
+              data_len % senArrLen === 0 ?
+                  len = data_len % senArrLen + senArrLen * arrOuter_index :
+                  len = data_len % senArrLen + senArrLen * (arrOuter_index - 1);
+          var arrSec_index = 0;//第二层数组的索引
+          for (var k = i; k < len; k++) {//第一层数组的开始取决于第二层数组长度*当前第一层的索引
+              arrOuter[arrOuter_index-1][arrSec_index] = data[k];
+              arrSec_index++;
+          }
+      }
+  }
+  console.log(arrOuter);
+  return arrOuter
+};
+
+function getQueryString(name) {
+  var reg = new RegExp('(^|&|\\?)' + name + '=([^&]*)(&|$)', 'i');
+  var r = window.location.href.substr(1).match(reg);
+  if (r != null) {
+    if(r[2].indexOf('#!/') > -1){
+      return r[2].split('#!/')[0]
+    }
+    if(r[2].indexOf('?') > -1){
+      return r[2].split('?')[0]
+    }
+    return unescape(r[2]);
+  }
+  return null;
+}
+
+ 
+
+var api = function(data, call){
+  var datas = {
+    url: '',
+    data: {},
+    type: 'GET'
+  }
+  // var url = 'http://minghua.orlab.pub/api/'
+  var url = '/api/'
+  if(window.location.href.indexOf(':80') > -1 || window.location.href.indexOf('orlab.pub') > -1){
+    url = 'http://mh.orlab.pub/api/'
+  }
+
+  var options = $.extend(datas, data)        
+  $.ajax({
+    url: url + options.url,
+    data: options.data,
+    type: options.type,
+    "dataType": "json",
+    success: function(res){
+      call(res)
+    },
+    error: function(err){
+      call(err)
+    }
+  })
+}

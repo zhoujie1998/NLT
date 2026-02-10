@@ -1,0 +1,219 @@
+$(function() {
+    var browser=navigator.appName
+    var b_version=navigator.appVersion
+    var version=b_version.split(";");
+    console.log(version)
+    var trim_Version=version.length > 1 ? version[1].replace(/[ ]/g,"") : '';
+    if(browser=="Microsoft Internet Explorer" && trim_Version=="MSIE9.0"){
+        $('h1, div, span, p, h2, h3, h4, img, h5, h6').css('opacity', 1)
+    }
+    $(window).scroll(function() {
+     var pageSCroll = $(this).scrollTop(); //页面滚动的高度
+     var h = document.documentElement.clientHeight; // 屏幕的高度
+    //  console.log(pageSCroll, h)
+     if(pageSCroll > 50){
+        $('.menu').addClass('menus')
+        $('.menu').css({
+            'margin-top': '0'
+        });
+        $('.menu_bg').css({
+            'opacity': '1'
+        });
+        // setTimeout(func)
+     }else{
+        $('.menu_bg').css({
+            'opacity': '0'
+        });
+        $('.menu').css({
+            'margin-top': '20px'
+        });
+        $('.menu').removeClass('menus')
+     }
+    // if(location.href.indexOf('index') > -1 ) {
+        // if($('.mi_menu > div > ul').css('display') != 'none'){
+        //     $('.mi_menu > div > ul').stop().animate({
+        //         opacity: 0
+        //       }, 200)
+        //     setTimeout(function(){
+        //       if($('.mi_menu > div > ul').css('opacity') == 0){
+        //         $('.mi_menu > div > ul').css('display', 'none')
+        //       }
+              
+        //     }, 250)
+        // }
+        if ($(".ted").offset().top - h + 100 < pageSCroll) {
+            setTimeout(function() {
+                $(".ted").removeClass('fadeOutDownMin')
+                $(".ted").addClass('fadeInUp')
+                // $(".ted > img").addClass('fadeInUp')
+            })
+            // setTimeout(function() {
+            //     $(".ted > img").addClass('fadeInUpMiuns')
+            // }, 200)
+            setTimeout(function() {
+                $(".ted > .right h1").removeClass('fadeOutDownMin')
+                $(".ted > .right h1").addClass('fadeInUpMiuns')
+            }, 500)
+            setTimeout(function() {
+                $(".ted > .right p").removeClass('fadeOutDownMin')
+                $(".ted > .right p").addClass('fadeInUpMiuns')
+            }, 700)
+            setTimeout(function() {
+                $(".ted > .right span").removeClass('fadeOutDownMin')
+                $(".ted > .right span").addClass('fadeInUpMiuns')
+            }, 1000)
+        }else if(pageSCroll < 10){
+            setTimeout(function() {
+                $(".ted").removeClass('fadeInUp')
+                $(".ted").addClass('fadeOutDownMin')
+            })
+           
+            setTimeout(function() {
+                $(".ted > .right h1").removeClass('fadeInUpMiuns')
+                $(".ted > .right h1").addClass('fadeOutDownMin')
+
+            }, 500)
+            setTimeout(function() {
+                $(".ted > .right p").removeClass('fadeInUpMiuns')
+                $(".ted > .right p").addClass('fadeOutDownMin')
+
+            }, 700)
+            setTimeout(function() {
+                $(".ted > .right span").removeClass('fadeInUpMiuns')
+                $(".ted > .right span").addClass('fadeOutDownMin')
+
+            }, 1000)
+        }
+
+        if ($("#map").offset().top - h +150 < pageSCroll) {
+            setTimeout(function() {
+                $("#map").addClass('fadeInUpMiuns animated')
+            })
+            // setTimeout(function() {
+            //     $("#map > img").addClass('fadeInUpMiuns animated')
+            // }, 400)
+            setTimeout(function() {
+                $("#map h1").addClass('fadeInUpMiuns animated')
+            }, 200)
+            setTimeout(function() {
+                if($("#map .right > div").eq(0).hasClass('fadeInUpMiuns') == false){
+                    var tl = new TimelineLite();
+                    tl.to(".scram_h1",0,{delay:0})//这边的delay就是用来做延迟显示的，也可以去掉的。用scrambleText这个插件的意义其实就是：当第一个动画结束之后，第二个动画才会开始，所以应该是去避免使用delay属性的
+                    .to(".scram_h1",2,{scrambleText:{text:"{original}", chars:"0123456789", revealDelay:0.5, tweenLength:true, newClass:"class2", oldClass:"class1",speed:10,delimiter:""}, ease:Linear.easeNone})
+       
+                }
+                $("#map .right > div").eq(0).addClass('fadeInUpMiuns animated')
+               
+            }, 400)
+            setTimeout(function() {
+                $("#map .right > div").eq(1).addClass('fadeInUpMiuns animated')
+            }, 400)
+            setTimeout(function() {
+                $("#map .right > div").eq(2).addClass('fadeInUpMiuns animated')
+            }, 600)
+            setTimeout(function() {
+                $("#map .map-new").eq(0).addClass('fadeInUpMiuns animated')
+            }, 700)
+            setTimeout(function() {
+                $("#map .map-new").eq(1).addClass('fadeInUpMiuns animated')
+            }, 900)
+            // setTimeout(function() {
+            //     $("#map .map_hover").eq(2).addClass('fadeInUpMiuns animated')
+            // }, 900)
+            // setTimeout(function() {
+            //     $("#map .map_hover").eq(3).addClass('fadeInUpMiuns animated')
+            // }, 1000)
+            // setTimeout(function() {
+            //     $("#map .map_hover").eq(4).addClass('fadeInUpMiuns animated')
+            // }, 1200)
+            
+         }
+     if ($("#company").offset().top - h +150 < pageSCroll) {
+        setTimeout(function() {
+            $("#company").addClass('fadeInUp animated')
+        })
+        setTimeout(function() {
+            $("#company .p1_text").addClass('fadeInUp animated')
+        }, 200)
+        // setTimeout(function() {
+        //     $("#company h1").addClass('fadeInUp animated')
+        // }, 200)
+        // setTimeout(function() {
+        //     $("#company p span").eq(0).addClass('fadeInUp animated')
+        // }, 400)
+        // setTimeout(function() {
+        //     $("#company p span").eq(1).addClass('fadeInUp animated')
+        // }, 600)
+        // setTimeout(function() {
+        //     $("#company .op2_btn").addClass('fadeInUp animated')
+        // }, 700)
+        
+     }
+
+    //  if ($("#city").offset().top - h +150 < pageSCroll) {
+        // setTimeout(function() {
+        //     $("#city").addClass('fadeInUp animated')
+        // })
+        // setTimeout(function() {
+        //     $("#city .p1_text").addClass('fadeInUp animated')
+        // }, 200)
+        // setTimeout(function() {
+        //     $("#city h1").addClass('fadeInUp animated')
+        // }, 200)
+        // setTimeout(function() {
+        //     $("#city p span").eq(0).addClass('fadeInUp animated')
+        // }, 400)
+        // setTimeout(function() {
+        //     $("#city p span").eq(1).addClass('fadeInUp animated')
+        // }, 600)
+        // setTimeout(function() {
+        //     $("#city .op2_btn").addClass('fadeInUp animated')
+        // }, 700)
+        
+    //  }
+
+    //  if ($("#home").offset().top - h +150 < pageSCroll) {
+    //     setTimeout(function() {
+    //         $("#home").addClass('fadeInUp animated')
+    //     })
+    //     setTimeout(function() {
+    //         $("#home h1").addClass('fadeInUp animated')
+    //     }, 200)
+    //     setTimeout(function() {
+    //         $("#home .left p").addClass('fadeInUp animated')
+    //     }, 400)
+    //     setTimeout(function() {
+    //         $("#home .left span").addClass('fadeInUp animated')
+    //     }, 600)
+        // setTimeout(function() {
+        //     $("#home p span").eq(0).addClass('fadeInUp animated')
+        // }, 400)
+        // setTimeout(function() {
+        //     $("#home p span").eq(1).addClass('fadeInUp animated')
+        // }, 600)
+        // setTimeout(function() {
+        //     $("#home .op2_btn").addClass('fadeInUp animated')
+        // }, 700)
+        
+    //  }
+
+     if ($(".product").offset().top - h +150 < pageSCroll) {
+        setTimeout(function() {
+            $(".product .title").addClass('fadeInUp animated')
+        })
+        setTimeout(function() {
+            $(".product_box").addClass('fadeInUp animated')
+        }, 200)
+
+        
+     }
+
+
+        
+    });
+
+
+
+
+
+})

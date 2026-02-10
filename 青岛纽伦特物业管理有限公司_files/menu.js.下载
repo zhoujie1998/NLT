@@ -1,0 +1,149 @@
+$(function(){
+    
+  $('.header').load('/menu.html', function(){
+    $('.kv2').css({
+      height: window.innerHeight - $('.header').height()
+    })
+    $('body').scroll()
+    var flag = false;
+    var self;
+    
+    $('.mi_menu > div').hover(function(){
+      var width = document.body.clientWidth - $('.mi_menu > div').eq(0).offset().left
+      if(window.innerWidth < 1000){
+        width = $('.mi_menu > div').eq(0).offset().left
+      }
+      // if(window.innerWidth < 1450 && window.innerWidth > 1300){
+      //   width += 100
+      // }else if(window.innerWidth < 1300){
+      //   width += 150
+      // }
+      
+      $('.mi_menu > div ul').css({
+        'width': width < 650 ? 650 : width,
+        // left: $('.mi_menu > div').eq(0).offset().left,
+        right: window.innerWidth < 1200 ? 0 : -(window.innerWidth - 1200) / 2 + 10,
+        display: 'none'
+      })
+      $(this).find('ul').stop().fadeIn()
+      self = this;
+      
+      $(this).find('ul').css('display', 'block')
+      setTimeout(function(){
+        $(self).find('ul').stop().animate({
+          opacity: 1
+        }, 200)
+      }, 0)
+    }, function(){
+      $(self).find('ul').stop().animate({
+        opacity: 0
+      }, 200)
+      setTimeout(function(){
+        if($(self).find('ul').css('opacity') == 0){
+          $(self).find('ul').css('display', 'none')
+        }
+      }, 300)
+      // $(this).find('ul').stop().fadeOut()
+      // $(this).find('ul').animate({
+      //   height: '0px'
+      // })
+    })
+  })
+  $('.footer').load('/footer.html')
+    // setTimeout(function(){
+    //   if($(".cn-back").length && $('.footer_wrapper').length){
+    //     $(".cn-back").parent().scrollFix({endPos:'.footer_wrapper'})
+      
+    //   }
+    // }, 1000)
+})
+var subMenuData = {
+  'about': [
+    {text: '走进明华', link: '/about/index.html'},
+    {text: '服务精神', link: '/about/service.html'},
+    {text: '明华大事记', link: '/about/notes.html'},
+    {text: '荣誉概况', link: '/about/honor.html'},
+    {text: '社会责任', link: '/about/responsibility.html'},
+    {text: '关联公司', link: '/about/company.html'},
+  ],
+  'project': [
+    {text: '公众展览场馆', link: '/project/exhibition.html'},
+    {text: '公众演艺场馆', link: '/project/deduction.html'},
+    {text: '公众体育场馆', link: '/project/gym.html'},
+    {text: '公众交通物业', link: '/project/transit.html'},
+    {text: '公众园林物业', link: '/project/gardens.html'},
+    {text: '宗教物业', link: '/project/religion.html'},
+  ],
+  'finance': [
+    {text: '金融园区', link: '/project/finance.html'},
+    {text: '科技园区', link: '/project/technology.html'},
+  ],
+  'introduce': [
+    {text: '会务活动', link: '/project/introduce.html'},
+    {text: '接待活动', link: '/project/reception.html'},
+    {text: '赛事活动', link: '/project/match.html'},
+  ],
+  'group': [
+    {text: '党建动态', link: '/group/index.html'},
+    {text: '群团动态', link: '/group/active.html'},
+  ],
+  'media': [
+    {text: '新闻中心', link: '/media/index.html'},
+    {text: '内部咨询', link: '/media/report.html'},
+  ]
+}
+
+var userAgentInfo = navigator.userAgent;
+var Agents = ["Android", "iPhone",
+    "SymbianOS", "Windows Phone",
+    "iPad", "iPod"];
+var flag = true;
+var hmtpc = 'PC'
+for (var v = 0; v < Agents.length; v++) {
+    if (userAgentInfo.indexOf(Agents[v]) > 0) {
+      flag = false;
+      hmtpc = 'MOBILE'
+      break;
+    }
+}
+
+if(hmtpc == 'MOBILE'){
+  window.location.href = '/mobile/ '
+}
+var subMenuConfig = {
+  init: function(key, index){
+    var keys = index ? index : key;
+    this.menuIndex(key)
+    this.append(subMenuData[keys])
+  },
+  menuIndex: function(key){
+    // console.log($('#' + key))
+    setTimeout(function(){
+      $('#' + key).addClass('m_border')
+    }, 300)
+  },
+  index: function(index){
+    $('.subMenu-item').eq(index).addClass('subMenu-item_select')
+  },
+  html: function(params){
+    var html = '<div class="subMenu-container">'
+      html += this.htmlChildren(params)
+    html += '</div>'
+    return html
+  },
+  htmlChildren: function(params){
+    var html = ''
+    for( var i = 0; i < params.length; i++){
+      var data = params[i];
+      html += '<div class="subMenu-item pointer" style="width:' + (100 / params.length) + '%;">';
+        html += '<a href="' + data.link + '">';
+          html += data.text;
+        html += '</a>';
+      html += '</div>';
+    }
+    return html
+  },
+  append: function(params){
+    $('.subMenu').html(this.html(params))
+  }
+}
